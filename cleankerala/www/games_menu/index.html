@@ -1,0 +1,144 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Games Menu{% endblock %}
+
+{% block page_content %}
+<style>
+    .menu-logo-bar {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+    }
+
+    .menu-logo-bar .profile-name {
+        flex: 3; 
+    }
+
+    .menu-logo-bar img {
+        height: 60px;
+    }
+
+    .menu-logo-bar .profile-name {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .game-menu-section {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+        font-family: 'Noto Sans', sans-serif;
+    }
+    .menu-title {
+        text-align: center;
+        font-size: 24px;
+        color: #074d45;
+        margin-bottom: 30px;
+        margin-top: -50px;
+    }
+
+    .menu-title_desc {
+        text-align: center;
+        font-size: 14px;
+        color: #1a5e56;
+        margin-bottom: 30px;
+        margin-top: -20px;
+    }
+
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+    }
+
+    .game-card {
+        background-color: #e0f2f1;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: transform 0.2s, background 0.3s;
+    }
+
+    .game-card:hover {
+        transform: translateY(-3px);
+        background-color: #b2dfdb;
+    }
+
+    .game-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .game-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #004d40;
+    }
+
+    .game-desc {
+        font-size: 12px;
+        color: #555;
+        margin-top: 4px;
+    }
+    footer, .footer, #footer {
+        display: none !important;
+    }
+    .profile-name {
+        font-size: 10px;
+    }
+
+</style>
+
+<div class="menu-logo-bar">
+    <img src="/files/logo-left.png" alt="Left Logo">
+    <div class="profile-name"></div>
+    <img src="/files/logo-right.png" alt="Right Logo">
+</div>
+
+<div class="game-menu-section">
+    <div class="menu-title">സ്വച്ഛ കേരള - ഗെയിംസ് <br> </div>
+    <div class="menu-title_desc">നിങ്ങളുടെ ഗെയിം തിരഞ്ഞെടുക്കൂ 🎮</div>
+    <div class="game-grid">
+        <div class="game-card" data-route="/app/trash-runner-game">
+            <div class="game-icon">🚀</div>
+            <div class="game-title">ട്രാഷ് സോർട്ടർ</div>
+            <div class="game-desc">ശരിയായ ബിൻ തിരഞ്ഞെടുക്കുക! ♻️</div>
+        </div>
+        <div class="game-card" data-route="/app/puzzle-game">
+            <div class="game-icon">🧩</div>
+            <div class="game-title">ചോദ്യോത്തരങ്ങൾ</div>
+            <div class="game-desc">പരിസ്ഥിതി വിഷയങ്ങൾക്കായുള്ള ചോദ്യങ്ങൾ !</div>
+        </div>
+        <div class="game-card" data-route="/app/tap-the-leak-game">
+            <div class="game-icon">🚰</div>
+            <div class="game-title">ടാപ്പ് ദ ലീക്ക്</div>
+            <div class="game-desc">ജലഹാനി തടയാം!</div>
+        </div>
+        <div class="game-card" data-route="/app/trash-matching-game">
+            <div class="game-icon">🧠</div>
+            <div class="game-title">ട്രാഷ് മാച്ചിംഗ്</div>
+            <div class="game-desc">ഓർത്തുവെക്കൂ, തുല്യമായവ കണ്ടെത്തൂ!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const user = "{{ frappe.session.user }}";
+        const isGuest = user === "Guest";
+
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const route = card.getAttribute('data-route');
+                if (isGuest) {
+                    window.location.href = "/login?redirect-to=" + encodeURIComponent(route);
+                } else {
+                    window.location.href = route;
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
