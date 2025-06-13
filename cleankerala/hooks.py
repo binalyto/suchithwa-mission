@@ -26,8 +26,14 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/cleankerala/css/cleankerala.css"
-# app_include_js = "/assets/cleankerala/js/cleankerala.js"
-
+app_include_js = [
+    "/assets/cleankerala/js/custom_login.js",
+    "/assets/cleankerala/js/custom_signup.js"
+]
+website_route_rules = [
+    {"from_route": "/login", "to_route": "custom-login"},
+    {"from_route": "/signup", "to_route": "custom-signup"}
+]
 # include js, css files in header of web template
 # web_include_css = "/assets/cleankerala/css/cleankerala.css"
 # web_include_js = "/assets/cleankerala/js/cleankerala.js"
@@ -177,6 +183,7 @@ app_license = "mit"
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "cleankerala.event.get_events"
 # }
+
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
