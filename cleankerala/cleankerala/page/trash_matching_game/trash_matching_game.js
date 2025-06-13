@@ -4,7 +4,6 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
         single_column: true,
     });
 
-    
     // Hide Frappe default page head
     $(page.wrapper).find('.page-head').hide();
 
@@ -36,11 +35,9 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
             z-index: 1000;
             transition: background-color 0.3s ease;
         }
-
         .menu-button:hover {
             background-color: #004d40;
         }
-
         .puzzle-header img {
             width: 80px;
             height: auto;
@@ -57,18 +54,13 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
     `;
     $(wrapper).append(style);
 
-    // ✅ Immediately hide the navbar on page load
+    // Immediately hide the navbar on page load
     $('.navbar').hide();
 
-
     $(wrapper).append('<button class="menu-button">Menu</button>');
-
-    // Menu button click
     $(wrapper).on('click', '.menu-button', function() {
         window.location.href = '/games_menu';
     });
-
-
 
     // Header with logos
     const header = `
@@ -85,7 +77,7 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
         <div class="result-message" style="text-align:center; margin-bottom:10px;"></div>
         <div id="game-board" style="
             display: grid;
-            grid-template-columns: repeat(5, 60px);
+            grid-template-columns: repeat(4, 60px);
             grid-gap: 16px;
             justify-content: center;
         "></div>
@@ -103,7 +95,8 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
         cards.push({ id: item, content: item });
         cards.push({ id: item, content: item });
     });
-    cards.push({ id: 'dummy', content: '❓' }); // 25th card
+    // ❌ No dummy card
+
     cards = shuffle(cards);
 
     const gameBoard = $('#game-board');
@@ -131,7 +124,7 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
         `);
 
         cardDiv.on('click', function() {
-            if (lockBoard || $(this).hasClass('flipped') || card.id === 'dummy') return;
+            if (lockBoard || $(this).hasClass('flipped')) return;
 
             flipCard($(this), card);
 
@@ -154,12 +147,9 @@ frappe.pages['trash-matching-game'].on_page_load = function(wrapper) {
                 if (matches === items.length) {
                     setTimeout(() => {
                         $('.result-message').html('<div style="color: green; font-size: 20px;">അഭിനന്ദനങ്ങൾ! നിങ്ങൾ വിജയിച്ചു 🎉</div>');
-
-                        // Redirect to congratulation page after 3 seconds
                         setTimeout(() => {
                             frappe.set_route('congratulation');
                         }, 3000);
-
                     }, 300);
                 }
 
