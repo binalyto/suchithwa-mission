@@ -22,6 +22,7 @@ $(document).ready(function () {
             const full_name = $("#full_name").val();
             const password = $("#password").val();
             const confirm_password = $("#confirm_password").val();
+            const mobile = $("#mobile").val();
 
             if (!validatePasswordMatch(password, confirm_password)) {
                 showMessage("Passwords do not match.");
@@ -40,7 +41,8 @@ $(document).ready(function () {
                 data: JSON.stringify({
                     email: email,
                     full_name: full_name,
-                    password: password
+                    password: password,
+                    mobile: mobile
                 }),
                 success: function (r) {
                     $("#btn-text").show();

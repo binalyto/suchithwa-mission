@@ -10,9 +10,14 @@ def custom_signup():
     full_name = data.get("full_name")
     password = data.get("password")
     redirect_to = data.get("redirect_to", "/")
+    mobile = data.get("mobile")
+
 
     if not all([email, full_name, password]):
         frappe.throw(_("All fields are required"), title=_("Missing Fields"))
+    
+    if not mobile or not mobile.isdigit() or len(mobile) != 10:
+        frappe.throw(_("Please enter a valid 10-digit mobile number"), title=_("Invalid Mobile"))
 
     if not frappe.utils.validate_email_address(email):
         frappe.throw(_("Please enter a valid email address"), title=_("Invalid Email"))
@@ -28,10 +33,11 @@ def custom_signup():
             "doctype": "User",
             "email": email,
             "first_name": full_name,
+            "mobile_no": mobile,
             "enabled": 1,
             "send_welcome_email": 0,
             "user_type": "Website User",
-            "roles": [{"role": "Students"}]
+            "roles": [{"role": "Public"}]
         })
 
         user.flags.ignore_permissions = True
